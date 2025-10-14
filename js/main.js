@@ -16,23 +16,14 @@ let bandsEl = $('#bands');
 let previewEl = $('#bandsPreview');
 
 // ===== modepicker =====
-<<<<<<< HEAD
 //const splash     = document.getElementById('splash');
-=======
-const splash     = document.getElementById('splash');
->>>>>>> 66fabfe00141bbdfdc22448b62b3ba6d775ec000
 const btnStart   = document.getElementById('btnStart');
 const modePicker = document.getElementById('modePicker');
 
 btnStart.addEventListener('click', async () => {
   // optional: play splash tap sound
-<<<<<<< HEAD
   await AudioManager.userInit?.(); // unlock audio
   try { audio.splash.currentTime = 0; await audio.splash.play(); } catch {}
-=======
-  try { audio.splash.currentTime = 0; await audio.splash.play(); } catch {}
-
->>>>>>> 66fabfe00141bbdfdc22448b62b3ba6d775ec000
   // hide splash, show picker
   splash.classList.add('hidden');
   modePicker.classList.remove('hidden');
@@ -40,7 +31,6 @@ btnStart.addEventListener('click', async () => {
 });
 
 // example: choosing a mode (you can wire real handlers later)
-<<<<<<< HEAD
 // document.getElementById('chooseClassic').addEventListener('click', () => {
 //   audio.stopAll();               // ⬅ stop splash
 //   audio.playLoop('classic');
@@ -60,19 +50,6 @@ document.getElementById('chooseClassic')
 
 document.getElementById('chooseLightning')
   .addEventListener('click', () => beginMode('lightning'));
-=======
-document.getElementById('chooseClassic').addEventListener('click', () => {
-  modePicker.classList.add('hidden');
-  modePicker.setAttribute('aria-hidden', 'true');
-  beginMode?.('classic'); // or 'standard' if that's your key
-});
-
-document.getElementById('chooseLightning').addEventListener('click', () => {
-  modePicker.classList.add('hidden');
-  modePicker.setAttribute('aria-hidden', 'true');
-  beginMode?.('lightning');
-});
->>>>>>> 66fabfe00141bbdfdc22448b62b3ba6d775ec000
 
 document.getElementById('chooseRound').addEventListener('click', () => {
   modePicker.classList.add('hidden');
@@ -231,7 +208,6 @@ addEventListener('pointerup', ()=>{
 // ===== splash → picker wiring =====
 const audio = {
   splash: new Audio('./assets/audio/splash.mp3'),
-<<<<<<< HEAD
   classic: new Audio('./assets/audio/classic.mp3'),
   lightning: new Audio('./assets/audio/lightning.mp3'),
   stopAll() {
@@ -253,18 +229,6 @@ const audio = {
 //   try { audio.splash.currentTime=0; await audio.splash.play(); } catch {}
 //   picker.classList.remove('hide');
 // });
-=======
-  classic:new Audio('./assets/audio/classic.mp3'),
-  lightning:new Audio('./assets/audio/lightning.mp3'),
-  playLoop(name){ const a=this[name]; if(!a) return; a.loop=true; a.currentTime=0; return a.play().catch(()=>{}); },
-  stopAll(){ [this.splash,this.classic,this.lightning].forEach(a=>{ try{a.pause();}catch{} }); }
-};
-
-$('#btnStart').addEventListener('click', async ()=>{
-  try { audio.splash.currentTime=0; await audio.splash.play(); } catch {}
-  picker.classList.remove('hide');
-});
->>>>>>> 66fabfe00141bbdfdc22448b62b3ba6d775ec000
 
 $('#cancelPicker').addEventListener('click', ()=> picker.classList.add('hide'));
 
@@ -283,7 +247,6 @@ $('#chooseLightning').addEventListener('click', async ()=>{
 });
 
 // Optional: auto-show splash on load (already visible by default)
-<<<<<<< HEAD
 
 import { AudioManager } from './audio.js';
 
@@ -338,5 +301,3 @@ function beginMode(modeName) {
     })
     .catch(err => console.error('Failed to load mode:', err));
 }
-=======
->>>>>>> 66fabfe00141bbdfdc22448b62b3ba6d775ec000
