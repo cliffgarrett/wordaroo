@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Word-a-Roo</title>
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+  <!-- Splash -->
+  <section id="splash" class="splash">
+    <img src="./assets/img/splash.png" alt="" class="bg">
+    <button id="btnStart">▶ Start</button>
+  </section>
+
+  <!-- Mode Picker -->
+<!-- MODE PICKER -->
+<div id="modePicker" class="picker hidden" aria-hidden="true">
+  <div class="pickerCard" role="dialog" aria-modal="true" aria-labelledby="pickerTitle">
+    <h2 id="pickerTitle">Choose a mode</h2>
+    <p class="sub">Pick your vibe and let’s go.</p>
+    <div class="stack">
+      <button id="chooseClassic"   class="mBtn">Classic</button>
+      <button id="chooseLightning" class="mBtn">Lightning Round</button>
+      <button id="chooseRound"     class="mBtn">Round-A-Roo</button>
+      <button id="cancelPicker"    class="ghostBtn">Cancel</button>
+    </div>
+  </div>
+  <!-- decorative badge in lower-left of the picker -->
+  <img class="pickerBadge" src="assets/img/modepicker.png" alt="" aria-hidden="true">
+</div>
+
+  <!-- Game -->
+  <main id="gameWrap" class="hide">
+    <header class="hud">
+      <div class="chip">Level <span id="lvl">1</span></div>
+      <button id="btnHint" class="chip">💡 Hint</button>
+    </header>
+
+    <section id="msgArea">
+      <div id="liveWord"></div>
+      <div id="msgStack" aria-live="polite"></div>
+    </section>
+
+    <section id="board">
+      <div class="card">
+        <!-- overlays kept, but optional -->
+        <div id="bandsPreview" class="layers"></div>
+        <div id="bands" class="layers"></div>
+        <div id="grid" aria-label="letter grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./js/main.js" type="module"></script>
+</body>
+</html>
