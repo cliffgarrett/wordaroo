@@ -1,0 +1,182 @@
+:root {
+  --bg: #0c1015;
+  --fg: #e9eef4;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, Segoe UI, Inter, sans-serif;
+}
+
+/* body { padding-bottom: 90px; } */
+
+/* Splash */
+#splash {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  background: #000;
+  z-index: 10;
+}
+
+#splash img.bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+}
+
+#btnStart {
+  position: relative;
+  margin: 2rem;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 900;
+  border: none;
+  border-radius: 999px;
+  padding: 1rem 1.5rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(10,123,209,0.4);
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(10,123,209,.45); }
+  70% { transform: scale(1.03); box-shadow: 0 0 0 20px rgba(10,123,209,0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(10,123,209,0); }
+}
+
+.hidden { display: none !important; }
+
+/* Picker */
+.picker {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0,0,0,.6);
+  z-index: 15;
+}
+
+.pickerCard {
+  background: #16181d;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 18px;
+  padding: 18px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,.5);
+  width: min(92vw, 420px);
+}
+
+.stack {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.mBtn {
+  appearance: none;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-weight: 900;
+  cursor: pointer;
+  background: #232633;
+  color: #fff;
+}
+
+.ghostBtn {
+  border: 1px solid #555;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: transparent;
+  color: #ccc;
+}
+
+.pickerBadge {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  width: min(28vw, 160px);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/*----------------*/
+
+:root {
+  --bg1: #0b0e13;
+  --bg2: #151a22;
+  --panel-bg: #1e2130;
+  --panel-border: #2c3144;
+  --pill-shadow: rgba(0,0,0,0.25);
+  --text: #fff;
+  --accent: #0a7bd1;
+}
+
+/* === BASE LAYOUT === */
+#classicBoard {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--text);
+  background: radial-gradient(circle at 50% 0%, var(--bg2), var(--bg1) 80%);
+  overflow: hidden;
+  /* padding-bottom: 2rem; */
+}
+
+/* Subtle animated gradient drift (if used under canvas) */
+@keyframes drift {
+  0% { background-position: 0 0; }
+  100% { background-position: 400% 400%; }
+}
+
+#classicBoard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, #1a1d25, #1a1b20, #11141b, #151a22);
+  background-size: 400% 400%;
+  animation: drift 30s linear infinite;
+  z-index: 0;
+  opacity: 0.3;
+}
+
+/* === HUD === */
+#hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: clamp(320px, 90%, 720px);
+  /* margin-top: 1rem; */
+  z-index: 5;
+}
+
+#hud h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+
+#lvl {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 1rem;
+  padding: 0.3rem 0.8rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+

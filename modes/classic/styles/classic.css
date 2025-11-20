@@ -1,0 +1,1496 @@
+/* ---------------------------------------------------------
+   WORD-A-ROO (CLASSIC MODE)
+   COMPLETE CSS REWRITE FOR “GOBBLES MOUTH SYSTEM”
+--------------------------------------------------------- */
+
+/* GLOBAL -------------------------------------------------- */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #1c1b20;
+  font-family: 'mplus-bold', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* modes/classic/styles/classic.css */
+
+/* ---------- Layout / Background ---------- */
+:root {
+  --cell: 100%;
+  --fontsize: calc(var(--cell) * 0.56);
+  --teethOffset: 140px; /* distance from HUD to top of wordBar */
+}
+
+@font-face {
+    font-family: 'fredoka';
+    src: url('/modes/classic/assets/fonts/fredoka.woff2') format('woff2'),
+          url('/modes/classic/assets/fonts/fredoka.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* Recommended for performance */
+}
+
+@font-face {
+    font-family: 'led';
+    src: url('/modes/classic/assets/fonts/led_sas.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* Recommended for performance */
+}
+
+@font-face {
+    font-family: 'mplus-reg';
+    src: url('/modes/classic/assets/fonts/MPlusRegular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* Recommended for performance */
+}
+
+@font-face {
+    font-family: 'mplus-bold';
+    src: url('/modes/classic/assets/fonts/MPlusBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* Recommended for performance */
+}
+body {
+      font-family: 'mplus-bold';
+}
+
+#classicBoard {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: radial-gradient(circle at 50% 30%, #202530, #12141a);
+  color: #fff;
+  overflow: hidden;
+}
+
+#classicBoard #lava {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ---------- HUD ---------- */
+
+#hud {
+  position: relative;
+  z-index: 10;
+  width: min(900px, 100vw - 24px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.25rem;
+  margin-top: 0.4rem;
+  height: 34px;
+}
+
+.hud-left,
+.hud-right {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.hud-center {
+  flex: 1;
+  display: flex;
+  /* justify-content: center; */
+  justify-content: space-between;
+}
+
+.hud-btn {
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 0.35rem 0.6rem;
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.hud-btn:hover {
+  filter: brightness(1.1);
+}
+
+.hud-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.22rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.35);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.cell {
+    display: grid;
+    place-items: center;
+    width: var(--cell);
+    height: var(--cell);
+    font-weight: 900;
+    font-size: var(--fontsize);
+    color: #101318;
+    background: transparent;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    margin: auto;
+}
+
+/* .cell.sel {
+  background: #3b82f6;
+  color: #fff;
+  transform: scale(1.07);
+} */
+
+/* .cell.hint-cell {
+  background: #fff7c4;
+  background: gold;
+  animation: shake 0.5s;
+  animation-iteration-count: 1;
+} */
+/* .cell.sel {
+  background: rgba(255,255,255,0.35);
+  color: #000;
+  font-weight: 900;
+  border-radius: 8px;
+  transition: background 0.08s;
+} */
+#liveSelect .selChar {
+  display: inline-block;
+  margin: 0 3px;
+  padding: 4px 8px;
+  background: #fff;
+  color: #000;
+  border-radius: 10px;
+  font-weight: 900;
+  transform: translateY(4px);
+  animation: popSel .12s ease-out;
+}
+/* .cell.found {
+  background: var(--found-color);
+  color: #000;
+  font-weight: 900;
+  border-radius: 10px;
+} */
+/* ACTIVE SELECTION CAPSULE */
+/* .grid .cell.sel {
+  background: var(--capsuleColor) !important;
+  color: #000 !important;
+  border-radius: 14px !important;
+  transform: scale(1.03);
+} */
+
+/* FOUND WORD CAPSULE */
+/* .grid .cell.found {
+  background: var(--foundCapsuleColor) !important;
+  color: #000 !important;
+  border-radius: 14px !important;
+  transform: scale(1.0);
+  opacity: 0.95;
+} */
+
+
+@keyframes popSel {
+  0% { transform: translateY(10px) scale(0.8); opacity: 0; }
+  100% { transform: translateY(4px) scale(1); opacity: 1; }
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+/* ---------- Hint Button Bottom ---------- */
+
+#hintWrap {
+  position: relative;
+  z-index: 7;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1.3rem;
+}
+
+.hint-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  border: none;
+  font-size: 1.7rem;
+  display: grid;
+  place-items: center;
+  background: #ffd166;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+  cursor: pointer;
+}
+
+#hintWrap.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* ---------- Message Cloud ---------- */
+
+.msg-cloud {
+  --elementH: 36px;
+  font-size: 1.1rem;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 16px;
+  min-width: 80px;
+  border-radius: var(--elementH);
+  text-transform: uppercase;
+  background: #f2f2f2;
+  color: goldenrod;
+  opacity: 0;
+  transform: translateY(40%) scale(0.8);
+  transition: all 0.25s ease-out;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+}
+
+.msg-cloud.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+Confetti
+/* ----------  ---------- */
+
+#confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 80;
+}
+
+
+/* ---------------------------------------------------------
+   GAME CARD — MAIN WHITE ROUNDED AREA
+--------------------------------------------------------- */
+
+#gameCard {
+  position: relative;
+  width: calc(100% - 20px);
+  border-radius: 25px;
+  background: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.25);
+  margin-top: 0.5rem;
+  z-index: 100;
+  background-image: url(../assets/img/fur5.png);
+  padding: 10px;
+}
+#gameCard {
+  min-height: calc(100vh - 240px); /* 100px = HUD area */
+  height: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* ---------------------------------------------------------
+   GOBBLES TOP LAYER (HAIR + EYES)
+--------------------------------------------------------- */
+
+#gobblesFaceLayer  {
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 500;
+  pointer-events: none;
+  display: flex;  
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* ---------------------------------------------------------
+   EYES
+--------------------------------------------------------- */
+#monsterTransition {
+  position: absolute;
+  top: 0;
+  width: calc(100% - 20px);
+  z-index: 600;
+  pointer-events: none;
+}
+
+/* -------------------------
+   BASE EYE STRUCTURE
+-------------------------- */
+
+#monsterEyes {
+  position: absolute;
+  top: 45%; /* tweak to taste */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 14px;
+  z-index: 900;
+  pointer-events: auto; /* for clicking Gobbles */
+}
+
+#monsterEyes.eye-focus .pupil {
+  animation: none;
+  transform: scale(0.95);
+}
+
+/* Eye container */
+#monsterEyes .eye {
+  width: 48px;
+  height: 58px;
+  background: #ffffff;
+  border-radius: 50%;
+  border: 6px solid #000;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden; /* Eyes must mask pupils */
+}
+
+/* Real pupil element instead of ::after */
+#monsterEyes .eye .pupil {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: #000;
+  border-radius: 50%;
+  top: 24px;
+  left: 12px;
+  transform-origin: center center;
+
+  /* default idle animations: blink + gaze */
+  animation:
+    blink 5s infinite,
+    gaze 7s infinite;
+}
+
+
+/* -------------------------
+   BLINK + IDLE GAZE
+-------------------------- */
+
+@keyframes blink {
+  0%, 88%, 100% { transform: scaleY(1); }
+  90%, 92%      { transform: scaleY(0.1); }
+}
+
+@keyframes gaze {
+  0%, 100% { left: 12px; }
+  40%      { left: 9px; }
+  70%      { left: 15px; }
+}
+
+
+/* Extra blink pulse when JS adds .eye-blink-once */
+#monsterEyes.eye-blink-once .pupil {
+  animation: blinkOnce 0.25s 1;
+}
+
+/* Core eye moods – you can tune each as you like */
+/* -------------------------
+   NEUTRAL
+-------------------------- */
+#monsterEyes.eye-neutral .eye {
+  border-color: #000;
+}
+#monsterEyes.eye-neutral .pupil {
+  animation:
+    blink 5s infinite,
+    gaze 7s infinite;
+}
+
+/* -------------------------
+   ANGRY
+-------------------------- */
+#monsterEyes.eye-angry .eye {
+  box-shadow:
+    0 0 0 6px #000 inset,
+    0 0 12px rgba(255, 80, 80, 0.8);
+}
+#monsterEyes.eye-angry .pupil {
+  animation: none; /* overrides blink/gaze */
+  transform: scale(0.9);
+}
+#monsterEyes.eye-angry {
+  animation: eyeShake 0.4s linear;
+}
+@keyframes eyeShake {
+  0%,100% { transform: translate(-50%, -50%); }
+  25%     { transform: translate(-48%, -52%); }
+  75%     { transform: translate(-52%, -48%); }
+}
+
+/* -------------------------
+   WIDE (surprised)
+-------------------------- */
+#monsterEyes.eye-wide .pupil {
+  animation: none;
+  top: 20px;
+  transform: scale(1.2, 0.8);
+}
+
+/* -------------------------
+   FRET (toward timer)
+-------------------------- */
+#monsterEyes.eye-fret .pupil {
+  animation: none;
+  left: 18px;
+  top: 22px;
+}
+
+/* -------------------------
+   STINK EYE (green pupils)
+-------------------------- */
+#monsterEyes.eye-stink .eye {
+  box-shadow:
+    0 0 0 6px #000 inset,
+    0 0 12px #00c853;
+}
+#monsterEyes.eye-stink .pupil {
+  animation: none;
+  background: #00c853;
+  transform: scale(0.8);
+}
+
+/* -------------------------
+   SHOCK
+-------------------------- */
+#monsterEyes.eye-shock .pupil {
+  animation: none;
+  transform: scale(1.7);
+  top: 18px;
+}
+
+/* -------------------------
+   SQUINT
+-------------------------- */
+#monsterEyes.eye-squint .eye {
+  border-radius: 55% 55% 40% 40%;
+}
+#monsterEyes.eye-squint .pupil {
+  animation: none;
+  top: 28px;
+}
+
+/* -------------------------
+   CROSS EYES
+-------------------------- */
+#monsterEyes.eye-cross .pupil {
+  animation: none;
+  left: 8px;
+}
+
+/* -------------------------
+   ROLL (eyes rolling upward)
+-------------------------- */
+#monsterEyes.eye-roll .pupil {
+  animation: eyeRoll 0.5s ease-out;
+}
+@keyframes eyeRoll {
+  from { top: 24px; }
+  to   { top: 6px; }
+}
+
+/* -------------------------
+   FLIRT
+-------------------------- */
+#monsterEyes.eye-flirt .eye {
+  border-radius: 60% 60% 40% 40%;
+}
+#monsterEyes.eye-flirt .pupil {
+  animation: none;
+  left: 15px;
+  top: 22px;
+}
+
+/* -------------------------
+   SLEEP
+-------------------------- */
+#monsterEyes.eye-sleep .eye {
+  opacity: 0.7;
+}
+#monsterEyes.eye-sleep .pupil {
+  animation: none;
+  top: 30px;
+}
+
+/* -------------------------
+   DERP (one high, one low)
+-------------------------- */
+#monsterEyes.eye-derp .eye.left .pupil {
+  animation: none;
+  top: 26px;
+}
+#monsterEyes.eye-derp .eye.right .pupil {
+  animation: none;
+  top: 32px;
+}
+
+/* -------------------------
+   EXHAUSTED
+-------------------------- */
+#monsterEyes.eye-exhausted .eye {
+  opacity: 0.6;
+}
+#monsterEyes.eye-exhausted .pupil {
+  animation: none;
+}
+
+/* -------------------------
+   PANIC (rapid micro darts)
+-------------------------- */
+#monsterEyes.eye-panic .pupil {
+    animation: none;
+
+  animation: panicDart 0.25s infinite;
+}
+@keyframes panicDart {
+  0%   { left: 12px; top: 24px; }
+  25%  { left: 8px;  top: 26px; }
+  50%  { left: 14px; top: 22px; }
+  75%  { left: 10px; top: 28px; }
+  100% { left: 12px; top: 24px; }
+}
+
+/* -------------------------
+   GAG
+-------------------------- */
+#monsterEyes.eye-gag .pupil {
+  animation: none;
+  left: 6px;
+  transform: scale(0.9);
+}
+
+/* -------------------------
+   SMUG
+-------------------------- */
+#monsterEyes.eye-smug .eye {
+  border-radius: 45% 45% 60% 60%;
+}
+#monsterEyes.eye-smug .pupil {
+  animation: none;
+  left: 13px;
+}
+
+/* -------------------------
+   MISCHIEF
+-------------------------- */
+#monsterEyes.eye-mischief .pupil {
+  animation: none;
+  left: 16px;
+}
+
+/* -------------------------
+   SAD
+-------------------------- */
+#monsterEyes.eye-sad .eye {
+  border-radius: 40% 40% 60% 60%;
+}
+#monsterEyes.eye-sad .pupil {
+  animation: none;
+  top: 28px;
+}
+
+/* -------------------------
+   HAPPY
+-------------------------- */
+#monsterEyes.eye-happy .eye {
+  border-radius: 60% 60% 47% 47%;
+}
+#monsterEyes.eye-happy .pupil {
+  animation: none;
+  top: 22px;
+}
+
+/* Keyframes (keep / merge with existing) */
+
+@keyframes blink {
+  0%, 89%, 100% { transform: scaleY(1); }
+  90%, 92%      { transform: scaleY(0.12); }
+}
+
+@keyframes blinkOnce {
+  0%   { transform: scaleY(1); }
+  45%  { transform: scaleY(0.1); }
+  100% { transform: scaleY(1); }
+}
+
+@keyframes gaze {
+  0%, 100% { left: 12px; }
+  40%      { left: 9px; }
+  70%      { left: 15px; }
+}
+
+@keyframes eyeShake {
+  0%,100% { transform: translate(-50%, -50%); }
+  25%     { transform: translate(-48%, -49%); }
+  75%     { transform: translate(-52%, -51%); }
+}
+
+@keyframes eyeRoll {
+  0%   { top: 24px; left: 12px; }
+  50%  { top: 16px; left: 18px; }
+  100% { top: 24px; left: 12px; }
+}
+
+@keyframes panicDart {
+  0%   { left: 10px; }
+  25%  { left: 6px; }
+  50%  { left: 16px; }
+  75%  { left: 8px; }
+  100% { left: 12px; }
+}
+
+
+/* ---------------------------------------------------------
+   MOUTH INTERIOR (upper jaw)
+--------------------------------------------------------- */
+
+#mouth {
+  background: black;
+  position: relative;
+  /* width: 100%; */
+  overflow: hidden;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  border: 5px solid black;
+  border-bottom: none;
+}
+
+/* inner anim container – this is what the state machine toggles */
+#mouthInner {
+  position: relative;
+  width: 100%;
+  transition: height 0.25s ease-out;
+}
+
+/* state classes (JS toggles these on #mouthInner) */
+#mouthInner.mouth-closed {
+  height: 0;
+}
+#mouthInner.mouth-teeth {
+  height: 120px; /* only enough for teeth & roof; tune */
+}
+/* #mouthInner.mouth-open { */
+  /* height: 360px; /* full game area; tune to your boardWrap */
+/* } */
+
+/* Roof (purple word bar) */
+#mouthRoof {
+  position: relative;
+  padding: 14px 0 10px;
+  background: linear-gradient(
+    to bottom,
+    #4a1e19 0%,     /* deep shadowed hard palate */
+    #6b2d26 35%,   /* warms toward your target tone */
+    #8e3c36 70%,   /* your chosen color */
+    #a44b44 100%   /* blends into tongue color beautifully */
+  );
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  text-align: center;
+  z-index: 10;
+}
+
+#title {
+  font-family: 'fredoka', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.35);
+  text-transform: uppercase;
+}
+
+#wordList {
+  font-family: 'mplus-bold', sans-serif;
+  font-size: 1.0rem;
+  color: #ffffff;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 4px;
+  column-gap: 12px;
+  justify-items: center;
+  text-transform: uppercase;
+}
+#wordList div.done {
+  opacity: 0.35;
+  text-decoration: line-through;
+  filter: grayscale(100%);
+}
+
+/* Throat / tongue */
+
+#throat {
+  position: relative;
+  width: 100%;
+  height: 64px;
+  background: radial-gradient(circle at 50% 60%, #3a0020 0%, #000000 60%);
+  overflow: visible;
+}
+
+#uvula {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 16px;
+  height: 32px;
+  transform: translateX(-50%);
+  background: #a44b44;
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.4);
+  transform-origin: top center;
+  animation: uvulaSway 7s ease-in-out infinite;
+}
+
+#tongue {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  width: 90%;
+  height: 500px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 50% 0%, #ffafc0 0%, #e06a82 60%, #b33b5b 100%);
+  border-radius: 60px 60px 30px 30px;
+  animation: tongueWave 8s ease-in-out infinite;
+}
+
+#wordBar {
+  position: relative;
+  width: 100%;
+  /* background: linear-gradient(to bottom, #6e2dff, #8a3cff, #bc68ff); */
+  padding: 10px 0 5px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  text-align: center;
+  z-index: 200;
+}
+
+/* PUZZLE TITLE */
+/* #title {
+  font-family: 'fredoka', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #ffffff;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.35);
+} */
+
+/* WORD LIST */
+/* #wordList {
+  font-family: 'mplus-bold', sans-serif;
+  font-size: 1.0rem;
+  color: #ffffff;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 4px;
+  column-gap: 12px;
+  justify-items: center;
+  text-transform: uppercase;
+} */
+
+#mouth,
+#mouthInner,
+#uvula,
+#teethTopWrap,
+#teethBottomWrap,
+#tongue,
+#tongueTexture,
+#gobblesFaceLayer,
+#monsterEyes,
+#monsterTransition,
+#msg {
+    pointer-events: none !important;
+}
+.boardWrap {
+    pointer-events: none;  /* NOT the children */
+    position: relative;
+    z-index: 1;
+    background: transparent;
+}
+
+.boardWrap * {
+    pointer-events: auto;  /* restores grid / tongue interactivity */
+}
+
+#grid {
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 1000;
+}
+
+#mouth {
+    position: relative;
+    z-index: 1;
+}
+
+#grid,
+#boardWrap,
+#gameCard {
+    touch-action: none;
+}
+
+/* ---------------------------------------------------------
+   JUMBLE TIMER (LED chip)
+--------------------------------------------------------- */
+
+.jumble-timer-chip {
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  background: #000;
+  padding: 4px 14px;
+  border-radius: 14px;
+  font-family: 'led', sans-serif;
+  font-size: 1.2rem;
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.35);
+  display: none;
+  z-index: 250;
+}
+#jumbleTimer {
+  min-width: 2ch;
+  text-align: center;
+  display: inline-block;
+}
+
+/* ---------------------------------------------------------
+   MESSAGE AREA (bubble spawns here)
+--------------------------------------------------------- */
+
+#msg {
+  position: relative;
+  height: 0;       /* ← FIXED */
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 300;
+}
+
+#liveSelect {
+  position: relative;
+  min-height: 24px;
+  margin-top: 4px;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  z-index: 320;
+}
+#liveSelect {
+    position: absolute;
+    min-height: 24px;
+    margin-top: -45px;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    z-index: 320;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.selChar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  font-family: 'mplus-bold', sans-serif;
+  font-size: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+}
+
+/* MESSAGE BUBBLE ------------------------------------------ */
+
+.msg-cloud {
+  --elementH: 34px;
+
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 10px) scale(0.85);
+  transform-origin: 50% 100%;
+  height: var(--elementH);
+  padding: 4px 16px;
+  border-radius: var(--elementH);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: 'fredoka', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 900;
+  text-transform: uppercase;
+
+  box-shadow: 0 3px 8px rgba(0,0,0,0.28);
+  opacity: 0;
+
+  animation-duration: 1.4s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.25, 0.7, 0.3, 1.0);
+}
+
+.msg-cloud.praise {
+  background: #fff8dc;
+  color: #de9e00;
+}
+
+.msg-cloud.miss {
+  background: #efefef;
+  color: #444;
+}
+
+/* POP → CURVE LEFT → RISE → FADE */
+.msg-cloud.arc-left {
+  animation-name: msgPopArcLeft;
+}
+.msg-cloud.arc-right {
+  animation-name: msgPopArcRight;
+}
+
+@keyframes msgPopArcLeft {
+  0% {
+    transform: translate(-50%, 12px) scale(0.85);
+    opacity: 0;
+  }
+  15% {
+    transform: translate(calc(-50% - 6px), -4px) scale(1.05);
+    opacity: 1;
+  }
+  70% {
+    transform: translate(calc(-50% - 22px), -95px) scale(1.14);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% - 30px), -150px) scale(0.98);
+    opacity: 0;
+  }
+}
+
+@keyframes msgPopArcRight {
+  0% {
+    transform: translate(-50%, 12px) scale(0.85);
+    opacity: 0;
+  }
+  15% {
+    transform: translate(calc(-50% + 6px), -4px) scale(1.05);
+    opacity: 1;
+  }
+  70% {
+    transform: translate(calc(-50% + 22px), -95px) scale(1.14);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + 30px), -150px) scale(0.98);
+    opacity: 0;
+  }
+}
+
+/* ---------------------------------------------------------
+   GRID AREA (BELLY)
+--------------------------------------------------------- */
+
+.boardWrap {
+    position: relative;
+    padding: 0px;
+    background: transparent;
+    /* padding-top: 22px;
+    top: -20px; */
+    border-bottom-right-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+}
+
+.grid {
+  display: grid;                     /* important */
+  gap: 4px;
+  background: #fdfdfd;
+  border-radius: 20px;
+  /* padding: 16px; */
+  margin-top: 10px;
+  box-shadow: 0 0 0 5px rgba(143,0,255,0.25);
+  width: calc(100% - 12px);
+  aspect-ratio: 1 / 1;
+  padding: 6px;
+}
+
+.grid .cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  background: #ffffff;
+  /* box-shadow: 0 2px 4px rgba(0,0,0,0.08); */
+  font-family: 'mplus-bold', sans-serif;
+  font-size: 1.2rem;
+  margin: auto;
+}
+
+/* ---------------------------------------------------------
+   CAPSULE KIT — CELL STATES
+--------------------------------------------------------- */
+
+/* Base Cells */
+.grid .cell {
+  font-family: 'mplus-bold', sans-serif;
+  font-size: 1.4rem;
+  user-select: none;
+  touch-action: none;
+  transition: background 0.12s ease, transform 0.12s ease;
+}
+
+/* Live selection path */
+/* .cell.sel {
+  background: var(--capsuleColor);
+  color: #000;
+  border-radius: 14px;
+  transform: scale(1.03);
+} */
+
+/* Completed word — locked in */
+/* .cell.found {
+  background: var(--foundCapsuleColor);
+  color: #000;
+  border-radius: 14px;
+  transform: scale(1.0);
+  opacity: 0.95;
+} */
+
+/* Clearing state on miss */
+.cell.clearPulse {
+  animation: clearPulse 0.4s ease-out;
+}
+@keyframes clearPulse {
+  0%   { transform: scale(0.95); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ---------------------------------------------------------
+   CAPSULES — applied to selections + found words
+--------------------------------------------------------- */
+
+/* Selected capsules */
+/* .cell.sel {
+  position: relative;
+  color: #fff;
+  font-weight: 700; */
+
+  /* Uses the JS-set variable */
+  /* background: var(--capsuleColor, #9adafe);
+
+  transform: scale(1.05);
+  transition: background 0.12s, transform 0.12s;
+
+  box-shadow:
+    0 2px 4px rgba(0,0,0,0.25),
+    inset 0 0 6px rgba(255,255,255,0.25);
+} */
+
+/* Found capsules */
+/* .cell.found {
+  position: relative;
+  color: #fff !important;
+  font-weight: 800;
+
+  background: var(--foundCapsuleColor, #a29fff);
+
+  border-radius: 18px;
+  padding: 4px 10px;
+  transform: scale(1.02);
+
+  box-shadow:
+    0 2px 6px rgba(0,0,0,0.3),
+    inset 0 0 8px rgba(255,255,255,0.35);
+} */
+
+/* Slight press animation on tap */
+/* .cell.sel:active,
+.cell.found:active {
+  transform: scale(0.96);
+} */
+
+/* Capsule chain smoothing */
+.grid .cell {
+  position: relative;
+  /* margin: -2px; /* ← overlap the neighbors */
+}
+
+/* Selected capsule */
+
+/* ---------------------------
+   CONNECTED CAPSULE SYSTEM  
+   --------------------------- */
+
+/* Base pill layer for any selected letter */
+.cell.sel {
+  background: var(--capsuleColor, #ffd54f);
+  color: #000;
+  border-radius: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Found word pill override */
+.cell.found {
+  background: var(--foundCapsuleColor, #a6f3a6);
+  color: #000;
+  border-radius: 25px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Remove gaps between cells inside the grid */
+.grid {
+  gap: 0px !important;
+}
+
+/* --- Capsule Edges --- */
+/* Middle segment: fully rounded vertically, square horizontally */
+.cell.sel.middle,
+.cell.found.middle {
+  border-radius: 10px;
+}
+
+/* Left end of pill */
+.cell.sel.start,
+.cell.found.start {
+  border-radius: 16px 8px 8px 16px;
+}
+
+/* Right end of pill */
+.cell.sel.end,
+.cell.found.end {
+  border-radius: 8px 16px 16px 8px;
+}
+
+/* Single-cell pill */
+.cell.sel.single,
+.cell.found.single {
+  border-radius: 16px;
+}
+
+.capsuleLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;     /* so grid still receives input */
+  z-index: 10;              /* BELOW grid, ABOVE tongue */
+}
+
+.capsuleLayer svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.capsule-active polyline {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  stroke-width: 22;        /* thickness of capsules */
+  opacity: 0.85;
+}
+
+.capsule-found polyline {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  stroke-width: 22;
+  opacity: 0.95;
+}
+
+/* ---------------------------------------------------------
+   SCRAMBLED LETTER DROP ANIMATION (Roo-a-Range)
+--------------------------------------------------------- */
+
+.scramble-letter {
+  display: inline-block;
+  font-family: 'fredoka', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+
+  transform: translateY(-60px) scale(0.78);
+  opacity: 0;
+
+  animation: dropIn 0.45s cubic-bezier(0.25, 0.65, 0.35, 1.30) forwards;
+}
+@keyframes dropIn {
+  0% {
+    transform: translateY(-60px) scale(0.78);
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(6px) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1.0);
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------
+   MONSTER TEETH
+--------------------------------------------------------- */
+
+.monster-teeth-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 500;
+}
+
+/* Teeth use translateY for open/close */
+#monsterTeethTop,
+#monsterTeethBottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  transition: transform 0.35s ease-out;
+}
+
+/* Default: teeth parked just off-screen */
+#monsterTeethTop {
+  top: 155px;
+  transform: translateY(0);     /* fully hidden above */
+}
+#monsterTeethTop img {
+  width: 100%;
+  height: 50px;
+}
+
+#monsterTeethBottom {
+  bottom: -560px;
+  transform: translateY(0);     /* fully hidden below */
+  border-bottom-right-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  overflow: hidden;
+}
+#monsterTeethBottom img {
+  width: 100%;
+  height: 50px;
+}
+
+/* Open state: jaws in their calibrated open positions */
+#monsterTeethTop.open {
+  transform: translateY(70px);
+}
+#monsterTeethBottom.open {
+  transform: translateY(300px);
+}
+
+/* Chomp state: jaws close in further */
+#monsterTransition.chomp #monsterTeethTop {
+  transform: translateY(150px);
+}
+#monsterTransition.chomp #monsterTeethBottom {
+  transform: translateY(200px);
+}
+
+
+
+#teethTopWrap {
+  transform-origin: top center;
+  transition: transform 0.25s ease-out, height 0.25s ease-out;
+}
+
+#teethBottomWrap {
+  transform-origin: bottom center;
+  transition: transform 0.25s ease-out, height 0.25s ease-out;
+}
+
+/* base: full extension */
+#mouthInner.mouth-teeth #teethTopWrap,
+#mouthInner.mouth-teeth #teethBottomWrap {
+  height: 50px;
+  transform: translateY(0);
+}
+
+/* closed: retracted into gums */
+#mouthInner.mouth-closed #teethTopWrap,
+#mouthInner.mouth-closed #teethBottomWrap {
+  height: 0;
+}
+
+/* open: retract teeth so only ~6px tips show */
+#mouthInner.mouth-open #teethTopWrap {
+  height: 50px;
+  transform: translateY(-40px); /* 50 - 6 */
+}
+#mouthInner.mouth-open #teethBottomWrap {
+  height: 50px;
+  transform: translateY(44px);
+}
+
+#teethTop,
+#teethBottom {
+  width: 100%;
+  height: 50px;
+  display: block;
+}
+
+/* Uvula + tongue motion */
+
+@keyframes uvulaSway {
+  0%,100% { transform: translateX(-50%) rotate(0deg); }
+  25%     { transform: translateX(-50%) rotate(3deg); }
+  50%     { transform: translateX(-50%) rotate(-2deg); }
+  75%     { transform: translateX(-50%) rotate(1deg); }
+}
+
+@keyframes tongueWave {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%     { transform: translateX(-50%) translateY(-4px); }
+}
+
+/* ---------------------------------------------------------
+   MONSTER BANNER
+--------------------------------------------------------- */
+
+#monsterBanner {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.6);
+  opacity: 0;
+  text-align: center;
+  pointer-events: none;
+  transition: opacity 0.4s, transform 0.4s;
+  z-index: 600;
+}
+
+#monsterBanner.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+#monsterBanner h2 {
+  font-family: 'fredoka', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.4);
+}
+
+#teethTopWrap,
+#teethBottomWrap {
+  width: 100%;
+  height: 50px;     /* matches your SVG height */
+  overflow: hidden;
+  position: relative;
+  z-index: 500;
+  pointer-events: none;
+}
+
+#teethTopWrap {
+  position: absolute;
+  /* width: calc(100% - 20px); */
+}
+
+#teethBottomWrap {
+  width: 100%;
+  position: absolute;
+  bottom: 8px;
+}
+
+
+#teethTop,
+#teethBottom {
+  width: 100%;
+  height: 50px;
+}
+
+#teethTop,
+#teethBottom {
+  width: 100%;
+  height: 50px;
+}
+
+#mouthInterior {
+  position: relative;
+  z-index: 300;
+  transition: transform 0.45s ease-in-out;
+}
+
+#mouthInterior.chomped {
+  transform: translateY(-190px);   /* adjust to match teeth height */
+}
+
+#chin {
+  width: 100%;
+  height: 120px;
+  background-image: url('./assets/fur.png');
+  background-size: 200px 200px;
+  background-repeat: repeat;
+  position: relative;
+  z-index: 200;
+  overflow: visible;
+  text-align: center;
+}
+
+#levelAnnouncement {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: all 0.45s cubic-bezier(0.25, 0.75, 0.35, 1.25);
+  font-family: 'fredoka';
+  font-size: 2rem;
+  font-weight: bold;
+  padding-top: 22px;
+}
+
+#levelAnnouncement.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* #grid {
+  position: relative !important;
+  z-index: 999999 !important;
+} */
+#grid {
+    touch-action: none !important;
+}
+
+/* ---------------------------------------------------------
+   END OF FILE
+--------------------------------------------------------- */
