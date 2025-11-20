@@ -5,30 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Word-a-Roo</title>
 
-  <link rel="stylesheet" href="./styles/main.css">
-  <script type="module" src="./scripts/main.js"></script>
+  <!-- Using your folder structure for CSS/JS -->
+  <link rel="stylesheet" href="./css/styles.css">
+  <script type="module" src="./js/main.js"></script>
 </head>
+
 <body>
+
   <!-- Splash -->
-  <section id="splash">
+  <section id="splash" class="splash">
     <img src="./assets/img/splash.png" alt="Splash" class="bg">
-    <button id="btnStart">Start</button>
+    <button id="btnStart">▶ Start</button>
   </section>
 
   <!-- Mode Picker -->
-  <section id="modePicker" class="hidden picker">
-    <div class="pickerCard">
-      <h2>Choose a Mode</h2>
-      <p class="sub">Try Word-a-Roo Classic</p>
+  <section id="modePicker" class="hidden picker" aria-hidden="true">
+    <div class="pickerCard" role="dialog" aria-modal="true" aria-labelledby="pickerTitle">
+      <h2 id="pickerTitle">Choose a Mode</h2>
+      <p class="sub">Pick your vibe and let’s go.</p>
+
       <div class="stack">
-        <button class="mBtn" id="chooseClassic">Classic</button>
-        <button class="ghostBtn" id="cancelPicker">Back</button>
+        <button id="chooseClassic"   class="mBtn">Classic</button>
+        <button id="chooseLightning" class="mBtn">Lightning Round</button>
+        <button id="chooseRound"     class="mBtn">Round-A-Roo</button>
+        <button id="cancelPicker"    class="ghostBtn">Back</button>
       </div>
     </div>
-    <img src="./assets/img/modepicker.png" alt="Mode Badge" class="pickerBadge">
+
+    <!-- decorative badge -->
+    <img src="./assets/img/modepicker.png" alt="" class="pickerBadge" aria-hidden="true">
   </section>
 
   <!-- Game Stage -->
-  <main id="stage"></main>
+  <main id="gameWrap" class="hide">
+    <header class="hud">
+      <div class="chip">Level <span id="lvl">1</span></div>
+      <button id="btnHint" class="chip">💡 Hint</button>
+    </header>
+
+    <section id="msgArea">
+      <div id="liveWord"></div>
+      <div id="msgStack" aria-live="polite"></div>
+    </section>
+
+    <section id="board">
+      <div class="card">
+        <div id="bandsPreview" class="layers"></div>
+        <div id="bands" class="layers"></div>
+        <div id="grid" aria-label="letter grid"></div>
+      </div>
+    </section>
+  </main>
+
 </body>
 </html>

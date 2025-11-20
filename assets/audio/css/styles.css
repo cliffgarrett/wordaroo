@@ -1,0 +1,28 @@
+:root{ --bg:#0c1015; --fg:#e9eef4; --panelW:clamp(320px,92vw,760px); }
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);
+  font:600 16px/1.25 system-ui,-apple-system,Segoe UI,Inter,Roboto,Helvetica,Arial,sans-serif;}
+
+.hud{position:fixed;left:0;right:0;top:0;display:flex;gap:.6rem;align-items:center;
+  padding:.55rem .7rem;z-index:5}
+.chip{background:#1b1e27;border:1px solid rgba(255,255,255,.12);border-radius:14px;
+  padding:.38rem .65rem;cursor:pointer}
+
+#app{width:var(--panelW);margin:64px auto 28px;display:grid;gap:12px}
+#wordBar{background:#fff;color:#000;border-radius:18px;padding:10px 14px}
+#wordList{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+#msgArea{min-height:48px;display:grid;place-items:center}
+#board .card{position:relative;background:#fff;border-radius:24px;padding:14px;
+  border:1px solid rgba(0,0,0,.12);display:grid;place-items:center;overflow:hidden}
+#grid{display:grid;gap:8px}
+.cell{display:grid;place-items:center;color:#000;font-weight:900;
+  width:var(--cell,56px);height:var(--cell,56px);border-radius:14px;
+  font-size:calc(var(--cell,56px) * .36)}
+.cell.sel{outline:3px solid #5fb5ff;outline-offset:2px;background:#f1f6ff}
+
+.hide{display:none}
+
+/* lightning tint */
+body.mode-lightning #board .card{opacity:.9;box-shadow:0 0 0 3px rgba(255,255,255,.05) inset}
+
+#storm{position:fixed;inset:0;z-index:0;pointer-events:none}
+#storm canvas{position:absolute;inset:0}

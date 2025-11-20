@@ -1,0 +1,372 @@
+:root{ --bg:#0c1015; --fg:#e9eef4; --panelW:clamp(320px,92vw,760px); }
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);
+  font:600 16px/1.25 system-ui,-apple-system,Segoe UI,Inter,Roboto,Helvetica,Arial,sans-serif;}
+
+.hud{position:fixed;left:0;right:0;top:0;display:flex;gap:.6rem;align-items:center;
+  padding:.55rem .7rem;z-index:5}
+.chip{background:#1b1e27;border:1px solid rgba(255,255,255,.12);border-radius:14px;
+  padding:.38rem .65rem;cursor:pointer}
+
+#app{width:var(--panelW);margin:64px auto 28px;display:grid;gap:12px}
+#wordBar{background:#fff;color:#000;border-radius:18px;padding:10px 14px}
+#wordList{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+#msgArea{min-height:48px;display:grid;place-items:center}
+#board .card{position:relative;background:#fff;border-radius:24px;padding:14px;
+  border:1px solid rgba(0,0,0,.12);display:grid;place-items:center;overflow:hidden}
+#grid{display:grid;gap:8px}
+.cell{display:grid;place-items:center;color:#000;font-weight:900;
+  width:var(--cell,56px);height:var(--cell,56px);border-radius:14px;
+  font-size:calc(var(--cell,56px) * .36)}
+.cell.sel{outline:3px solid #5fb5ff;outline-offset:2px;background:#f1f6ff}
+
+.hide{display:none}
+
+/* lightning tint */
+body.mode-lightning #board .card{opacity:.9;box-shadow:0 0 0 3px rgba(255,255,255,.05) inset}
+
+#storm{position:fixed;inset:0;z-index:0;pointer-events:none}
+#storm canvas{position:absolute;inset:0}
+/* place button above the splash image */
+
+/* Fullscreen splash */
+#splash{
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:100;            /* above everything until dismissed */
+}
+#splash img.bg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.9;
+}
+
+/* Pulsing Start button, bottom-left */
+#btnStart{
+  position:absolute;
+  left: max(20px, env(safe-area-inset-left));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  appearance:none;
+  border:0;
+  border-radius:999px;
+  padding:14px 22px;
+  background:#0a7bd1;
+  color:#fff;
+  font-weight:900;
+  letter-spacing:.02em;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(0,0,0,.45), inset 0 -3px 0 rgba(0,0,0,.25);
+  z-index:1;              /* above the image */
+}
+#btnStart:active{ transform:translateY(1px) }
+
+@media (prefers-reduced-motion:no-preference){
+  @keyframes pulse {
+    0%   { transform:scale(1);   box-shadow:0 0 0 0 rgba(10,123,209,.45); }
+    70%  { transform:scale(1.03); box-shadow:0 0 0 14px rgba(10,123,209,0); }
+    100% { transform:scale(1);   box-shadow:0 0 0 0 rgba(10,123,209,0); }
+  }
+  #btnStart{ animation:pulse 1.6s ease-in-out infinite; }
+}
+
+/* Hide helper */
+.hidden{ display:none !important; }
+
+/* make sure the image sits behind */
+.splash .bg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.9;
+  z-index:1;               /* below the button */
+}
+
+/* Picker overlay */
+.picker{
+  position:fixed;
+  inset:0;
+  display:grid;
+  place-items:center;
+  background:rgba(0,0,0,.6);
+  z-index:110;           /* above splash/game */
+}
+
+/* Centered card */
+.pickerCard{
+  width:min(92vw, 420px);
+  background:#16181d;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 20px 50px rgba(0,0,0,.35);
+  text-align:center;
+}
+.pickerCard h2{ margin:0 0 6px }
+.pickerCard .sub{ margin:0 0 14px; opacity:.8 }
+
+/* Stacked buttons */
+.stack{
+  display:grid;
+  gap:12px;
+}
+.mBtn{
+  appearance:none;
+  border:none;
+  border-radius:14px;
+  padding:12px 16px;
+  font-weight:900;
+  cursor:pointer;
+  background:#232633;
+  color:#fff;
+}
+.mBtn:hover{ filter:brightness(1.08) }
+.ghostBtn{
+  appearance:none;
+  border:1px solid #444;
+  background:transparent;
+  color:#ddd;
+  border-radius:10px;
+  padding:10px 12px;
+}
+
+/* Decorative image in lower-left of the picker */
+.picker .pickerBadge{
+  position:absolute;
+  left:max(12px, env(safe-area-inset-left));
+  bottom:max(12px, env(safe-area-inset-bottom));
+  width:min(28vw, 160px);
+  height:auto;
+  opacity:.9;
+  pointer-events:none;
+  user-select:none;
+}
+<<<<<<< HEAD
+
+/* === CLASSIC MODE UI POLISH === */
+
+#classicBoard {
+  background: radial-gradient(circle at 50% 30%, #202530, #12141a);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  color: #fff;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#classicWrap {
+    border: purple 10px solid;
+    border-radius: 1.5rem;
+}
+
+/* title */
+#hud h2 {
+  margin: 0.5rem 0;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+/* live word text */
+#liveWord {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+/* grid layout */
+#grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(6, 58px);
+  justify-content: center;
+  user-select: none;
+  touch-action: none;
+}
+
+.cell {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  font-weight: 900;
+  background: transparent;
+  color: #353535;
+  border-radius: 12px;
+  transition: background 0.15s, transform 0.1s;
+  touch-action: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.cell.sel {
+  background: #3b82f6;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.cell:active {
+  transform: scale(1.05);
+}
+
+/* word list */
+.words {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 1.5rem;
+}
+
+.words span {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.words span.done {
+  color: #9adafe;
+  text-decoration: line-through;
+}
+
+/* message pop */
+#msg {
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.25s;
+  font-weight: 800;
+  margin-top: 0.5rem;
+  min-height: 40px;
+}
+
+#msg.show {
+  opacity: 1;
+  animation: popfade 1s ease forwards;
+}
+
+@keyframes popfade {
+  0% { transform: scale(0.9); opacity: 0; }
+  20% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+/* === Classic board layout === */
+.boardWrap {
+  position: relative;
+  display: grid;
+  justify-content: center;
+  margin-top: 0.8rem;
+}
+
+#pills {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-color: #fafafa;
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+#grid {
+  position: relative;
+  z-index: 2;
+}
+
+/* Make word list appear above grid */
+.words {
+  order: -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin: 0.5rem 0 1rem;
+}
+
+.words span.done {
+  color: #a8f5a6;
+  text-decoration: line-through;
+}
+
+/* === LIGHTNING MODE === */
+#lightningBoardVVV {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: #0a0e14;
+  overflow: hidden;
+}
+
+#lightningBoard {
+    background: radial-gradient(circle at 50% 30%, #202530, #12141a);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    color: #fff;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+#lightningWrap {
+  position: relative;
+  margin-top: 1rem;
+  z-index: 2;
+  border: 10px solid purple;
+  border-radius: 1.5rem;
+}
+
+#lightningBoard .boardWrap {
+  position: relative;
+  background: #fafafa;
+  border-radius: 1rem;
+  /* padding: 0.5rem;
+  box-shadow: 0 0 20px rgba(100,180,255,0.2); */
+}
+
+#lightningBoard .cell {
+  color: #111;
+  font-weight: 900;
+}
+
+#lightningBoard .cell.sel {
+  background: #9ad7ff;
+  color: #000;
+  box-shadow: 0 0 10px #9ad7ff;
+}
+
+/* word list */
+#lightningBoard .words {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+#lightningBoard .words{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+
+#lightningBoard .words span.done {
+  color: #ffd166;
+  text-decoration: line-through;
+}
+
+/* Flash effect */
+.stormFX.flash {
+  background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.9), transparent 60%),
+              radial-gradient(circle at 60% 50%, rgba(255,255,255,0.7), transparent 70%);
+  transition: background 0.2s;
+}
+=======
+>>>>>>> 66fabfe00141bbdfdc22448b62b3ba6d775ec000
